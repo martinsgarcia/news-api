@@ -10,7 +10,7 @@ import lombok.Data;
 public class NewsDTO {
 
 	@Schema(description = "Unique news identifier")
-	private int id;
+	private Long id;
 
 	@Schema(description = "News title")
 	private String title;

@@ -1,2 +1,7 @@
 spring:
-  environment: junit
+  environment: prod  
+  
+  jpa:
+    properties:
+      hibernate.format_sql: true
+      hibernate.show_sql: true

@@ -1,2 +1,7 @@
 spring:
-  environment: local
+  environment: local  
+  
+  jpa:
+    properties:
+      hibernate.format_sql: true
+      hibernate.show_sql: true

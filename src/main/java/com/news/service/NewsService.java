@@ -1,33 +1,61 @@
 package com.news.service;
 
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.news.api.rest.dto.NewsDTO;
+import com.news.persistence.entity.NewsEntity;
+import com.news.persistence.repository.NewsRepository;
 
 @Service
 public class NewsService {
 
-	public List<NewsDTO> getNews() {
+	@Autowired
+	private NewsRepository repository;
 
-		return Arrays.asList(
+	@Transactional(readOnly = true)
+	public List<NewsEntity> getNews() {
+		return repository.findAll();
+	}
 
-				NewsDTO
+	@Transactional(readOnly = true)
+	public NewsEntity get(long newsId) {
+		return repository.findById(newsId).orElseThrow(() -> new RuntimeException("News not found"));
+	}
 
-						.builder()
+	@Transactional
+	public void create(NewsDTO newsDTO) {
 
-						.id(1)
+		repository.save(NewsEntity.builder()
 
-						.title("Notícia 1")
+				.title(newsDTO.getTitle())
 
-						.description("Descrição Notícia 1")
+				.description(newsDTO.getDescription())
 
-						.build()
+				.build());
+	}
 
-		);
+	@Transactional
+	public NewsEntity update(long newsId, NewsDTO newsDTO) {
 
+		NewsEntity newsEntity = repository.findById(newsId).orElseThrow(() -> new RuntimeException("News not found"));
+
+		newsEntity.setTitle(newsDTO.getTitle());
+		newsEntity.setDescription(newsDTO.getDescription());
+
+		repository.save(newsEntity);
+
+		return newsEntity;
+	}
+
+	@Transactional
+	public void delete(long newsId) {
+
+		NewsEntity newsEntity = repository.findById(newsId).orElseThrow(() -> new RuntimeException("News not found"));
+		repository.delete(newsEntity);
 	}
 
 }

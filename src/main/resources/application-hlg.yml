@@ -1,2 +1,7 @@
 spring:
-  environment: hlg
+  environment: prod  
+  
+  jpa:
+    properties:
+      hibernate.format_sql: false
+      hibernate.show_sql: false

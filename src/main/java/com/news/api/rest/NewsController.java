@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.news.api.rest.dto.NewsDTO;
+import com.news.persistence.entity.NewsEntity;
 import com.news.service.NewsService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,34 +34,73 @@ public class NewsController {
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@GetMapping
 	public List<NewsDTO> getAll() {
-		return this.service.getNews();
+
+		return service.getNews()
+
+				.stream()
+
+				.map(newsEntity -> NewsDTO.builder()
+
+						.id(newsEntity.getId())
+
+						.title(newsEntity.getTitle())
+
+						.description(newsEntity.getDescription())
+
+						.build()
+
+				)
+
+				.toList();
 	}
 
 	@Operation(summary = "Get News", description = "Get News")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
-	@GetMapping(value = "/{id}")
-	public NewsDTO get(@PathVariable(name = "id") Long id) {
-		return null;
+	@GetMapping(value = "/{newsId}")
+	public NewsDTO get(@PathVariable(name = "newsId") Long newsId) {
+
+		NewsEntity newsEntity = service.get(newsId);
+
+		return NewsDTO
+
+				.builder()
+
+				.title(newsEntity.getTitle())
+
+				.description(newsEntity.getDescription())
+
+				.build();
 	}
 
 	@Operation(summary = "Create", description = "Create News")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@PostMapping
 	public void create(@RequestBody NewsDTO newsDTO) {
+		service.create(newsDTO);
 	}
 
 	@Operation(summary = "Update", description = "Update News")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
-	@PutMapping(value = "/{id}")
-	public NewsDTO update(@PathVariable(name = "id") Long id, @RequestBody NewsDTO newsDTO) {
-		return null;
+	@PutMapping(value = "/{newsId}")
+	public NewsDTO update(@PathVariable(name = "newsId") Long newsId, @RequestBody NewsDTO newsDTO) {
+		NewsEntity newsEntity = service.update(newsId, newsDTO);
+
+		return NewsDTO
+
+				.builder()
+
+				.title(newsEntity.getTitle())
+
+				.description(newsEntity.getDescription())
+
+				.build();
 	}
 
 	@Operation(summary = "Delete", description = "Delete News")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
-	@DeleteMapping(value = "/{id}")
-	public NewsDTO delete(@PathVariable(name = "id") Long id) {
-		return null;
+	@DeleteMapping(value = "/{newsId}")
+	public void delete(@PathVariable(name = "newsId") Long newsId) {
+		service.delete(newsId);
 	}
 
 }
