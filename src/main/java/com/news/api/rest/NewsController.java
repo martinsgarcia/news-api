@@ -2,7 +2,6 @@ package com.news.api.rest;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +26,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping(value = "/api/news", produces = MediaType.APPLICATION_JSON_VALUE)
 public class NewsController {
 
-	@Autowired
-	private NewsService service;
+	private final NewsService service;
+
+	public NewsController(NewsService service) {
+		this.service = service;
+	}
 
 	@Operation(summary = "Fetch all news", description = "fetches all news entities and their data from data source")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
