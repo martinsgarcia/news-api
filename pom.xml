@@ -58,4 +58,22 @@
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>local</id>
+			<properties>
+				<activatedProperties>local</activatedProperties>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>junit</id>
+			<properties>
+				<activatedProperties>junit</activatedProperties>
+			</properties>
+		</profile>
+	</profiles>
+
 </project>
