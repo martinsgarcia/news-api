@@ -18,4 +18,7 @@ public class NewsDTO {
 	@Schema(description = "News description")
 	private String description;
 
+	@Schema(description = "News category id")
+	private Long categoryId;
+
 }

@@ -21,7 +21,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "News", description = "The News Api")
+@Tag(name = "News API", description = "The News API")
 @RestController
 @RequestMapping(value = "/api/news", produces = MediaType.APPLICATION_JSON_VALUE)
 public class NewsController {
@@ -37,7 +37,7 @@ public class NewsController {
 	@GetMapping
 	public List<NewsDTO> getAll() {
 
-		return service.getNews()
+		return service.getAll()
 
 				.stream()
 
