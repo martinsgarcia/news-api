@@ -10,7 +10,7 @@ import com.cosium.spring.data.jpa.entity.graph.domain2.DynamicEntityGraph;
 import com.news.persistence.entity.NewsEntity;
 import com.news.persistence.entity.QNewsEntity;
 import com.news.persistence.repository.NewsRepository;
-import com.news.rest.dto.NewsDTO;
+import com.news.rest.dto.CreationNewsDTO;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 @Service
@@ -36,28 +36,28 @@ public class NewsService {
 	}
 
 	@Transactional
-	public void create(NewsDTO newsDTO) {
+	public void create(CreationNewsDTO creationNewsDTO) {
 
 		newsRepository.save(NewsEntity.builder()
 
-				.title(newsDTO.getTitle())
+				.title(creationNewsDTO.getTitle())
 
-				.description(newsDTO.getDescription())
+				.description(creationNewsDTO.getDescription())
 
-				.category(newsCategoryService.get(newsDTO.getCategoryId()))
+				.category(newsCategoryService.get(creationNewsDTO.getCategoryId()))
 
 				.build());
 	}
 
 	@Transactional
-	public NewsEntity update(long newsId, NewsDTO newsDTO) {
+	public NewsEntity update(long newsId, CreationNewsDTO creationNewsDTO) {
 
 		NewsEntity newsEntity = newsRepository.findById(newsId)
 				.orElseThrow(() -> new RuntimeException("News Id" + newsId + " not found to update"));
 
-		newsEntity.setTitle(newsDTO.getTitle());
-		newsEntity.setDescription(newsDTO.getDescription());
-		newsEntity.setCategory(newsCategoryService.get(newsDTO.getCategoryId()));
+		newsEntity.setTitle(creationNewsDTO.getTitle());
+		newsEntity.setDescription(creationNewsDTO.getDescription());
+		newsEntity.setCategory(newsCategoryService.get(creationNewsDTO.getCategoryId()));
 
 		newsRepository.save(newsEntity);
 

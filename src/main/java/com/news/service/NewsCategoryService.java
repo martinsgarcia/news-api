@@ -34,6 +34,8 @@ public class NewsCategoryService {
 
 		repository.save(NewsCategoryEntity.builder()
 
+				.id(newsCategoryDTO.getId())
+
 				.title(newsCategoryDTO.getTitle())
 
 				.description(newsCategoryDTO.getDescription())

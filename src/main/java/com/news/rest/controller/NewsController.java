@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.news.persistence.entity.NewsEntity;
+import com.news.rest.dto.CreationNewsDTO;
 import com.news.rest.dto.NewsDTO;
 import com.news.service.NewsService;
 
@@ -77,15 +78,15 @@ public class NewsController {
 	@Operation(summary = "Create", description = "Create News")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@PostMapping
-	public void create(@RequestBody NewsDTO newsDTO) {
-		service.create(newsDTO);
+	public void create(@RequestBody CreationNewsDTO creationNewsDTO) {
+		service.create(creationNewsDTO);
 	}
 
 	@Operation(summary = "Update", description = "Update News")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@PutMapping(value = "/{newsId}")
-	public NewsDTO update(@PathVariable(name = "newsId") Long newsId, @RequestBody NewsDTO newsDTO) {
-		NewsEntity newsEntity = service.update(newsId, newsDTO);
+	public NewsDTO update(@PathVariable(name = "newsId") Long newsId, @RequestBody CreationNewsDTO creationNewsDTO) {
+		NewsEntity newsEntity = service.update(newsId, creationNewsDTO);
 
 		return NewsDTO
 
