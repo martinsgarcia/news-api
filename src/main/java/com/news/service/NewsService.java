@@ -2,19 +2,21 @@ package com.news.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.news.api.rest.dto.NewsDTO;
 import com.news.persistence.entity.NewsEntity;
 import com.news.persistence.repository.NewsRepository;
+import com.news.rest.dto.NewsDTO;
 
 @Service
 public class NewsService {
 
-	@Autowired
-	private NewsRepository repository;
+	private final NewsRepository repository;
+
+	public NewsService(NewsRepository repository) {
+		this.repository = repository;
+	}
 
 	@Transactional(readOnly = true)
 	public List<NewsEntity> getNews() {

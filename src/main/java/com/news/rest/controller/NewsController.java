@@ -1,4 +1,4 @@
-package com.news.api.rest;
+package com.news.rest.controller;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.news.api.rest.dto.NewsDTO;
 import com.news.persistence.entity.NewsEntity;
+import com.news.rest.dto.NewsDTO;
 import com.news.service.NewsService;
 
 import io.swagger.v3.oas.annotations.Operation;
