@@ -53,11 +53,11 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ErrorResponse> handleException(Exception ex, HttpServletRequest req) {
 		HttpStatus status = getStatusFromRequest(req);
 
-		return new ResponseEntity<>(this.buildErrorResponse(req, ex), status);
+		return new ResponseEntity<>(this.buildErrorResponse(req, status.value(), ex), status);
 	}
 
 	private HttpStatus getStatusFromRequest(HttpServletRequest request) {
-		Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
+		Integer statusCode = (Integer) request.getAttribute("jakarta.servlet.error.status_code");
 
 		if (statusCode != null) {
 			return HttpStatus.valueOf(statusCode);
@@ -79,7 +79,7 @@ public class GlobalExceptionHandler {
 		if (fieldErrors.isEmpty())
 			return null;
 
-		return this.buildErrorResponse(req, ex, fieldErrors.get(0).getDefaultMessage());
+		return this.buildErrorResponse(req, HttpStatus.BAD_REQUEST.value(), ex, fieldErrors.get(0).getDefaultMessage());
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -89,8 +89,10 @@ public class GlobalExceptionHandler {
 
 		log.error("ConstraintViolationException Error: ", ex);
 
+		Integer statusCode = HttpStatus.BAD_REQUEST.value();
+
 		if (ex.getConstraintViolations().isEmpty())
-			return this.buildErrorResponse(req, ex);
+			return this.buildErrorResponse(req, statusCode, ex);
 
 		List<String> errors = new ArrayList<>();
 		for (ConstraintViolation<?> constraint : ex.getConstraintViolations()) {
@@ -101,20 +103,22 @@ public class GlobalExceptionHandler {
 				errors.add(constraint.getMessage());
 		}
 
-		return this.buildErrorResponse(req, ex, errors.get(0));
+		return this.buildErrorResponse(req, statusCode, ex, errors.get(0));
 	}
 
-	private ErrorResponse buildErrorResponse(HttpServletRequest req, Exception ex) {
-		return this.buildErrorResponse(req, ex, ex.getMessage());
+	private ErrorResponse buildErrorResponse(HttpServletRequest req, Integer status, Exception ex) {
+		return this.buildErrorResponse(req, status, ex, ex.getMessage());
 	}
 
-	private ErrorResponse buildErrorResponse(HttpServletRequest req, Exception ex, String message) {
+	private ErrorResponse buildErrorResponse(HttpServletRequest req, Integer status, Exception ex, String message) {
 
 		return ErrorResponse
 
 				.builder()
 
 				.url(req.getRequestURL().toString())
+
+				.status(status)
 
 				.exception(ex.getClass().getSimpleName())
 

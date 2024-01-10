@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 @Tag(name = "News API", description = "The News API")
 @RestController
@@ -78,14 +79,15 @@ public class NewsController {
 	@Operation(summary = "Create", description = "Create News")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@PostMapping
-	public void create(@RequestBody CreationNewsDTO creationNewsDTO) {
+	public void create(@Valid @RequestBody CreationNewsDTO creationNewsDTO) {
 		service.create(creationNewsDTO);
 	}
 
 	@Operation(summary = "Update", description = "Update News")
 	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@PutMapping(value = "/{newsId}")
-	public NewsDTO update(@PathVariable(name = "newsId") Long newsId, @RequestBody CreationNewsDTO creationNewsDTO) {
+	public NewsDTO update(@PathVariable(name = "newsId") Long newsId,
+			@Valid @RequestBody CreationNewsDTO creationNewsDTO) {
 		NewsEntity newsEntity = service.update(newsId, creationNewsDTO);
 
 		return NewsDTO
