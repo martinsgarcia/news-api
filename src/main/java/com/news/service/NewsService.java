@@ -3,6 +3,8 @@ package com.news.service;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +27,8 @@ public class NewsService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<NewsEntity> getAll() {
-		return newsRepository.findAll();
+	public Page<NewsEntity> getAll(Pageable pageable) {
+		return newsRepository.findAll(pageable);
 	}
 
 	@Transactional(readOnly = true)

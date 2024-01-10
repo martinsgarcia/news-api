@@ -18,8 +18,6 @@ import com.news.service.NewsCategoryService;
 import com.news.service.NewsService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name = "News Category API", description = "The News Category API")
@@ -36,7 +34,6 @@ public class NewsCategoryController {
 	}
 
 	@Operation(summary = "Fetch all categories", description = "fetches all categories entities and their data from data source")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@GetMapping
 	public List<NewsCategoryDTO> getAll() {
 
@@ -60,7 +57,6 @@ public class NewsCategoryController {
 	}
 
 	@Operation(summary = "Get Category", description = "Get Category")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@GetMapping(value = "/{newsCategoryId}")
 	public NewsCategoryDTO get(@PathVariable(name = "newsCategoryId") Long newsCategoryId) {
 
@@ -78,7 +74,6 @@ public class NewsCategoryController {
 	}
 
 	@Operation(summary = "Fetch all news by category", description = "fetches all news by category entities and their data from data source")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@GetMapping(value = "/{newsCategoryId}/news")
 	public List<NewsCategoryDTO> getByCategories(@PathVariable(name = "newsCategoryId") Long newsCategoryId) {
 
@@ -102,14 +97,12 @@ public class NewsCategoryController {
 	}
 
 	@Operation(summary = "Create", description = "Create News Category")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@PostMapping
 	public void create(@RequestBody NewsCategoryDTO newsCategoryDTO) {
 		newsCategoryService.create(newsCategoryDTO);
 	}
 
 	@Operation(summary = "Update", description = "Update News Category")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@PutMapping(value = "/{newsCategoryId}")
 	public NewsCategoryDTO update(@PathVariable(name = "newsCategoryId") Long newsCategoryId,
 			@RequestBody NewsCategoryDTO newsDTO) {
@@ -127,7 +120,6 @@ public class NewsCategoryController {
 	}
 
 	@Operation(summary = "Delete", description = "Delete News Category")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@DeleteMapping(value = "/{newsCategoryId}")
 	public void delete(@PathVariable(name = "newsCategoryId") Long newsCategoryId) {
 		newsCategoryService.delete(newsCategoryId);

@@ -2,6 +2,9 @@ package com.news.rest.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +21,6 @@ import com.news.rest.dto.NewsDTO;
 import com.news.service.NewsService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -35,13 +36,12 @@ public class NewsController {
 	}
 
 	@Operation(summary = "Fetch all news", description = "fetches all news entities and their data from data source")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@GetMapping
-	public List<NewsDTO> getAll() {
+	public Page<NewsDTO> getAll(Pageable pageable) {
 
-		return service.getAll()
+		Page<NewsEntity> newsPage = service.getAll(pageable);
 
-				.stream()
+		List<NewsDTO> newsDTO = newsPage.getContent().stream()
 
 				.map(newsEntity -> NewsDTO.builder()
 
@@ -56,10 +56,11 @@ public class NewsController {
 				)
 
 				.toList();
+
+		return new PageImpl<>(newsDTO, newsPage.getPageable(), newsPage.getTotalElements());
 	}
 
 	@Operation(summary = "Get News", description = "Get News")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@GetMapping(value = "/{newsId}")
 	public NewsDTO get(@PathVariable(name = "newsId") Long newsId) {
 
@@ -77,14 +78,12 @@ public class NewsController {
 	}
 
 	@Operation(summary = "Create", description = "Create News")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@PostMapping
 	public void create(@Valid @RequestBody CreationNewsDTO creationNewsDTO) {
 		service.create(creationNewsDTO);
 	}
 
 	@Operation(summary = "Update", description = "Update News")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@PutMapping(value = "/{newsId}")
 	public NewsDTO update(@PathVariable(name = "newsId") Long newsId,
 			@Valid @RequestBody CreationNewsDTO creationNewsDTO) {
@@ -102,7 +101,6 @@ public class NewsController {
 	}
 
 	@Operation(summary = "Delete", description = "Delete News")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "successful operation") })
 	@DeleteMapping(value = "/{newsId}")
 	public void delete(@PathVariable(name = "newsId") Long newsId) {
 		service.delete(newsId);
