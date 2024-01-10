@@ -32,7 +32,6 @@ class NewsCategoryServiceTest {
 
 		List<NewsCategoryEntity> result = newsCategoryService.getAll();
 
-		// Assert
 		assertEquals(2, result.size());
 		assertEquals("Category1", result.get(0).getTitle());
 		assertEquals("Category2", result.get(1).getTitle());
