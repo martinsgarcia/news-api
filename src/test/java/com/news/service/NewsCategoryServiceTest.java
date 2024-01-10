@@ -47,7 +47,6 @@ class NewsCategoryServiceTest {
 
 		NewsCategoryEntity result = newsCategoryService.get(1L);
 
-		// Assert
 		assertEquals("Category1", result.getTitle());
 	}
 
@@ -79,7 +78,6 @@ class NewsCategoryServiceTest {
 
 		NewsCategoryEntity result = newsCategoryService.update(1L, newsCategoryDTO);
 
-		// Assert
 		assertEquals("UpdatedCategory", result.getTitle());
 		assertEquals("UpdatedDescription", result.getDescription());
 	}
