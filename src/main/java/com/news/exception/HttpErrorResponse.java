@@ -4,8 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-@Schema(description = "Exception thrown when an HTTP 4xx is received.")
-public class HttpClientError {
+@Schema(description = "Exception thrown when an HTTP 4xx or 5xx is received.")
+public class HttpErrorResponse {
 
 	@Schema(description = "Request URL")
 	private String url;

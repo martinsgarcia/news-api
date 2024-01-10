@@ -32,21 +32,21 @@ public class GlobalExceptionHandler {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(HttpServerErrorException.class)
 	@ResponseBody
-	public HttpServerError httpServerException(HttpServerErrorException ex) throws IOException {
+	public HttpErrorResponse httpServerException(HttpServerErrorException ex) throws IOException {
 
 		log.error("HTTP Server Error: ", ex);
 
-		return mapper.readValue(ex.getResponseBodyAsString(), HttpServerError.class);
+		return mapper.readValue(ex.getResponseBodyAsString(), HttpErrorResponse.class);
 	}
 
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(HttpClientErrorException.class)
 	@ResponseBody
-	public HttpClientError httpClientException(HttpClientErrorException ex) throws IOException {
+	public HttpErrorResponse httpClientException(HttpClientErrorException ex) throws IOException {
 
 		log.error("HTTP Client Error: ", ex);
 
-		return mapper.readValue(ex.getResponseBodyAsString(), HttpClientError.class);
+		return mapper.readValue(ex.getResponseBodyAsString(), HttpErrorResponse.class);
 	}
 
 	@ExceptionHandler(Exception.class)
