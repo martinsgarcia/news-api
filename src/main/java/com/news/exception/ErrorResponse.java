@@ -2,9 +2,9 @@ package com.news.exception;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 @Builder
 @Schema(description = "Exception thrown when there is an unexpected error by the server")
 public class ErrorResponse {

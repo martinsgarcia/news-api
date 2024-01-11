@@ -30,6 +30,7 @@ class GlobalExceptionHandlerTest {
 
 	@Test
 	void httpServerException() throws IOException {
+
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.setRequestURI("/example");
 
@@ -43,6 +44,7 @@ class GlobalExceptionHandlerTest {
 
 	@Test
 	void httpClientException() throws IOException {
+
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.setRequestURI("/example");
 
@@ -56,6 +58,7 @@ class GlobalExceptionHandlerTest {
 
 	@Test
 	void handleException() {
+
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		when(request.getRequestURL()).thenReturn(new StringBuffer("http://example.com"));
 
@@ -75,7 +78,55 @@ class GlobalExceptionHandlerTest {
 	}
 
 	@Test
+	void handleExceptionErrorCode402() {
+
+		HttpServletRequest request = mock(HttpServletRequest.class);
+		when(request.getAttribute("jakarta.servlet.error.status_code")).thenReturn(HttpStatus.PAYMENT_REQUIRED.value());
+
+		when(request.getRequestURL()).thenReturn(new StringBuffer("http://example.com"));
+
+		Exception ex = new Exception("Generic Exception");
+
+		ResponseEntity<ErrorResponse> responseEntity = globalExceptionHandler.handleException(ex, request);
+
+		assertNotNull(responseEntity);
+		assertEquals(HttpStatus.PAYMENT_REQUIRED, responseEntity.getStatusCode());
+
+		ErrorResponse errorResponse = responseEntity.getBody();
+		assertNotNull(errorResponse);
+		assertEquals("http://example.com", errorResponse.getUrl());
+		assertEquals(HttpStatus.PAYMENT_REQUIRED.value(), errorResponse.getStatus());
+		assertEquals("Exception", errorResponse.getException());
+		assertEquals("Generic Exception", errorResponse.getMessage());
+	}
+
+	@Test
+	void handleExceptionWithCause() {
+
+		HttpServletRequest request = mock(HttpServletRequest.class);
+		when(request.getRequestURL()).thenReturn(new StringBuffer("http://example.com"));
+
+		Exception ex = mock(Exception.class);
+		when(ex.getCause()).thenReturn(new Throwable());
+		when(ex.getMessage()).thenReturn("Http Error");
+
+		ResponseEntity<ErrorResponse> responseEntity = globalExceptionHandler.handleException(ex, request);
+
+		assertNotNull(responseEntity);
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
+
+		ErrorResponse errorResponse = responseEntity.getBody();
+		assertNotNull(errorResponse);
+		assertEquals("http://example.com", errorResponse.getUrl());
+		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), errorResponse.getStatus());
+		assertEquals("Http Error", errorResponse.getMessage());
+		assertEquals("Throwable", errorResponse.getCause());
+
+	}
+
+	@Test
 	void methodArgumentNotValidException() {
+
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		when(request.getRequestURL()).thenReturn(new StringBuffer("http://example.com"));
 
@@ -86,11 +137,11 @@ class GlobalExceptionHandlerTest {
 		assertNotNull(response);
 		assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
 		assertEquals("MethodArgumentNotValidException", response.getException());
-		// Add more assertions based on your actual logic
 	}
 
 	@Test
 	void constraintViolationException() {
+
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.setRequestURI("/example");
 
@@ -103,6 +154,7 @@ class GlobalExceptionHandlerTest {
 
 	@Test
 	void buildErrorResponse() {
+
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		when(request.getRequestURL()).thenReturn(new StringBuffer("http://example.com"));
 
@@ -126,6 +178,5 @@ class GlobalExceptionHandlerTest {
 
 	private FieldError createFieldError() {
 		return new FieldError("objectName", "fieldName", "defaultMessage");
-		// Customize the field error as needed for your test
 	}
 }
