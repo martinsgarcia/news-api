@@ -28,14 +28,16 @@ Ensure you have the following tools installed:
 ## Setup
 
 1. Clone the repository:
-	```bash
-	git clone https://github.com/your-username/your-project.git
-	```
+```bash
+git clone https://github.com/your-username/your-project.git
+```
    
 2. Open the project in your IDE.
 
-3. Build the project using Maven
-
+3. Build the project using Maven:
+```bash
+mvn clean install
+```
 
 ## Project Structure
 
