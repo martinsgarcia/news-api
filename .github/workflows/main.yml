@@ -32,7 +32,7 @@ jobs:
       run: |
         mvn test
         # Assuming jacoco.xml is in the target/site/jacoco directory
-        ./cc-test-reporter format-coverage -t jacoco -o codeclimate.json
+        ./cc-test-reporter format-coverage -t jacoco -o codeclimate.json target/site/jacoco/jacoco.xml
         jacoco-to-lcov -f target/site/jacoco/jacoco.xml -o lcov.info
 
     - name: Upload coverage to CodeClimate
