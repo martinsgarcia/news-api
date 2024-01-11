@@ -97,6 +97,19 @@
 						<goals>
 							<goal>report</goal>
 						</goals>
+						
+						<configuration>
+							<outputDirectory>
+								${project.build.directory}/jacoco-ut</outputDirectory>
+							<dataFile>
+								${project.build.directory}/jacoco-ut/jacoco-ut.exec</dataFile>
+							<formats>
+								<format>HTML</format>
+								<format>CSV</format>
+								<format>XML</format>
+							</formats>
+						</configuration>					
+
 					</execution>
 				</executions>
 			</plugin>
