@@ -31,8 +31,8 @@ jobs:
     - name: Run tests and generate coverage
       run: |
         mvn test
-        ./cc-test-reporter format-coverage -t jacoco -o codeclimate.json --prefix target/site/jacoco/ --add-prefix
-        jacoco-to-lcov -f target/site/jacoco/jacoco.xml -o lcov.info --source-dir src/main/java
+        ./cc-test-reporter format-coverage -t jacoco -o codeclimate.json
+        sed -i 's|\"name\":\"|\"name\":\"src/main/java/|g' codeclimate.json
 
     - name: Upload coverage to CodeClimate
       run: ./cc-test-reporter upload-coverage -i codeclimate.json
