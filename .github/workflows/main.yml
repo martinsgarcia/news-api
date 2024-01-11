@@ -10,42 +10,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up JDK
-      uses: actions/setup-java@v2
-      with:
-        distribution: 'adopt'
-        java-version: '17'
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '17'
 
-    - name: Build with Maven
-      run: mvn clean install
+      - name: Build with Maven and generate coverage
+        run: mvn clean test jacoco:report
 
-    - name: Install and configure CodeClimate test reporter
-      run: |
-        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        chmod +x ./cc-test-reporter
-        ./cc-test-reporter before-build
+      - name: Install and configure CodeClimate test reporter
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          ./cc-test-reporter before-build
 
-    - name: Run tests and generate coverage
-      run: mvn test
-
-    - name: Upload coverage to CodeClimate
-      run: |
-        echo "caminho diretorio atual ..."
-        pwd
-        echo "arquivos diretorio atual ..."
-        ls
-        echo "check jacoco files..."
-        ls target/site/jacoco
-        echo "Ajustando permissões..."
-        chmod -R 755 target/site/jacoco/
-        echo "upload files part1 ..."
-        ./cc-test-reporter format-coverage -t jacoco -o codeclimate.json -p target/site/jacoco/jacoco.xml
-        echo "ls pos upload part1 ..."
-        ls target/site/jacoco
-        echo "upload files part2 ..."
-        ./cc-test-reporter upload-coverage -i codeclimate.json
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      - name: Upload coverage to CodeClimate
+        run: |
+          ./cc-test-reporter after-build --exit-code $?
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
