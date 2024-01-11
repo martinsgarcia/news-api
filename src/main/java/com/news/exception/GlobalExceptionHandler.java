@@ -106,7 +106,7 @@ public class GlobalExceptionHandler {
 		return this.buildErrorResponse(req, statusCode, ex, errors.get(0));
 	}
 
-	private ErrorResponse buildErrorResponse(HttpServletRequest req, Integer status, Exception ex) {
+	public ErrorResponse buildErrorResponse(HttpServletRequest req, Integer status, Exception ex) {
 		return this.buildErrorResponse(req, status, ex, ex.getMessage());
 	}
 
