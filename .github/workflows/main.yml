@@ -39,11 +39,14 @@ jobs:
         ls
         echo "check jacoco files..."
         ls target/site/jacoco
-        echo "updaload files part1 ..."
-        ./cc-test-reporter format-coverage -t jacoco --add-prefix "$(pwd)/target/site/jacoco" -o codeclimate.json
-        echo "ls pos uplodate part1 ..."
+        echo "Ajustando permissões..."
+        chmod +x ./cc-test-reporter
+        echo "upload files part1 ..."
+        ./cc-test-reporter format-coverage -t jacoco -o codeclimate.json -p target/site/jacoco/jacoco.xml
+        echo "ls pos upload part1 ..."
         ls target/site/jacoco
-        echo "updaload files part2 ..."
+        echo "upload files part2 ..."
         ./cc-test-reporter upload-coverage -i codeclimate.json
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+
