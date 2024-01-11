@@ -40,7 +40,7 @@ jobs:
         echo "check jacoco files..."
         ls target/site/jacoco
         echo "updaload files part1 ..."
-        ./cc-test-reporter format-coverage -t jacoco --add-prefix "target/site/jacoco" -o codeclimate.json
+        ./cc-test-reporter format-coverage -t jacoco --add-prefix "$(pwd)/target/site/jacoco" -o codeclimate.json
         echo "ls pos uplodate part1 ..."
         ls target/site/jacoco
         echo "updaload files part2 ..."
