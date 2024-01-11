@@ -66,6 +66,8 @@ public class NewsCategoryController {
 
 				.builder()
 
+				.id(newsCategoryEntity.getId())
+
 				.title(newsCategoryEntity.getTitle())
 
 				.description(newsCategoryEntity.getDescription())

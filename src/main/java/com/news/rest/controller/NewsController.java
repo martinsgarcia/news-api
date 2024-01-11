@@ -70,6 +70,8 @@ public class NewsController {
 
 				.builder()
 
+				.id(newsEntity.getId())
+
 				.title(newsEntity.getTitle())
 
 				.description(newsEntity.getDescription())
