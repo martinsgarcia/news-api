@@ -97,7 +97,7 @@
 						<goals>
 							<goal>report</goal>
 						</goals>
-						<!--
+
 						<configuration>
 							<outputDirectory>
 								${project.build.directory}/jacoco-ut</outputDirectory>
@@ -108,8 +108,8 @@
 								<format>CSV</format>
 								<format>XML</format>
 							</formats>
-						</configuration>					
-						-->
+						</configuration>
+
 					</execution>
 				</executions>
 			</plugin>
