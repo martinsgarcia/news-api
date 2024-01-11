@@ -97,7 +97,7 @@
 						<goals>
 							<goal>report</goal>
 						</goals>
-						
+						<!--
 						<configuration>
 							<outputDirectory>
 								${project.build.directory}/jacoco-ut</outputDirectory>
@@ -109,7 +109,7 @@
 								<format>XML</format>
 							</formats>
 						</configuration>					
-
+						-->
 					</execution>
 				</executions>
 			</plugin>
