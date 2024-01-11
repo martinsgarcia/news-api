@@ -42,11 +42,10 @@ jobs:
         echo "Ajustando permissões..."
         chmod -R 755 target/site/jacoco/
         echo "upload files part1 ..."
-        sudo ./cc-test-reporter format-coverage -t jacoco -o codeclimate.json -p target/site/jacoco/jacoco.xml
+        ./cc-test-reporter format-coverage -t jacoco -o codeclimate.json -p target/site/jacoco/jacoco.xml
         echo "ls pos upload part1 ..."
         ls target/site/jacoco
         echo "upload files part2 ..."
         ./cc-test-reporter upload-coverage -i codeclimate.json
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-
