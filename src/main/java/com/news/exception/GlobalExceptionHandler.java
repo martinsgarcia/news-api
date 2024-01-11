@@ -1,7 +1,6 @@
 package com.news.exception;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -18,9 +17,6 @@ import org.springframework.web.client.HttpServerErrorException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.extern.log4j.Log4j2;
 
 @ControllerAdvice
@@ -80,30 +76,6 @@ public class GlobalExceptionHandler {
 			return null;
 
 		return this.buildErrorResponse(req, HttpStatus.BAD_REQUEST.value(), ex, fieldErrors.get(0).getDefaultMessage());
-	}
-
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	@ResponseBody
-	@ExceptionHandler(ConstraintViolationException.class)
-	public ErrorResponse constraintViolationException(HttpServletRequest req, ConstraintViolationException ex) {
-
-		log.error("ConstraintViolationException Error: ", ex);
-
-		Integer statusCode = HttpStatus.BAD_REQUEST.value();
-
-		if (ex.getConstraintViolations().isEmpty())
-			return this.buildErrorResponse(req, statusCode, ex);
-
-		List<String> errors = new ArrayList<>();
-		for (ConstraintViolation<?> constraint : ex.getConstraintViolations()) {
-
-			if (constraint.getConstraintDescriptor().getAnnotation() instanceof NotEmpty)
-				errors.add(0, constraint.getMessage());
-			else
-				errors.add(constraint.getMessage());
-		}
-
-		return this.buildErrorResponse(req, statusCode, ex, errors.get(0));
 	}
 
 	public ErrorResponse buildErrorResponse(HttpServletRequest req, Integer status, Exception ex) {

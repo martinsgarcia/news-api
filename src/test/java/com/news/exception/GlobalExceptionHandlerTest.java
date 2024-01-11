@@ -23,7 +23,6 @@ import org.springframework.web.client.HttpServerErrorException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintViolationException;
 
 class GlobalExceptionHandlerTest {
 
@@ -152,19 +151,6 @@ class GlobalExceptionHandlerTest {
 		ErrorResponse response = globalExceptionHandler.methodArgumentNotValidException(request, ex);
 
 		assertNull(response);
-	}
-
-	@Test
-	void constraintViolationException() {
-
-		MockHttpServletRequest request = new MockHttpServletRequest();
-		request.setRequestURI("/example");
-
-		ConstraintViolationException ex = mock(ConstraintViolationException.class, Mockito.RETURNS_DEEP_STUBS);
-		Mockito.when(ex.getMessage()).thenReturn("Violation message");
-		Mockito.when(ex.getConstraintViolations()).thenReturn(Collections.emptySet());
-
-		assertNotNull(globalExceptionHandler.constraintViolationException(request, ex));
 	}
 
 	@Test
