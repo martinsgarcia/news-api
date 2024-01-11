@@ -30,6 +30,10 @@ jobs:
 
     - name: Run tests and generate coverage
       run: |
+        echo "echo target..."
+        echo target
+        echo "target/site/jacoco/ ..."
+        echo target/site/jacoco
         mvn test
         ./cc-test-reporter format-coverage -t jacoco -o codeclimate.json -p target/site/jacoco/jacoco.xml
 
