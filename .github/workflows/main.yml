@@ -40,9 +40,9 @@ jobs:
         echo "check jacoco files..."
         ls target/site/jacoco
         echo "Ajustando permissões..."
-        chmod -R 777 target/site/jacoco/
+        chmod -R 755 target/site/jacoco/
         echo "upload files part1 ..."
-        ./cc-test-reporter format-coverage -t jacoco -o codeclimate.json -p target/site/jacoco/jacoco.xml
+        sudo ./cc-test-reporter format-coverage -t jacoco -o codeclimate.json -p target/site/jacoco/jacoco.xml
         echo "ls pos upload part1 ..."
         ls target/site/jacoco
         echo "upload files part2 ..."
