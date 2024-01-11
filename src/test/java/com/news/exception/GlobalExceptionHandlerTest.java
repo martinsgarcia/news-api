@@ -2,6 +2,7 @@ package com.news.exception;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -137,6 +138,20 @@ class GlobalExceptionHandlerTest {
 		assertNotNull(response);
 		assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
 		assertEquals("MethodArgumentNotValidException", response.getException());
+	}
+
+	@Test
+	void methodArgumentNotValidExceptionWithoutFiledErrors() {
+
+		HttpServletRequest request = mock(HttpServletRequest.class);
+		when(request.getRequestURL()).thenReturn(new StringBuffer("http://example.com"));
+
+		MethodArgumentNotValidException ex = new MethodArgumentNotValidException(null, createBindingResult());
+		when(ex.getBindingResult().getFieldErrors()).thenReturn(Collections.emptyList());
+
+		ErrorResponse response = globalExceptionHandler.methodArgumentNotValidException(request, ex);
+
+		assertNull(response);
 	}
 
 	@Test
