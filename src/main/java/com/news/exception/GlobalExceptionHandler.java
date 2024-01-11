@@ -122,6 +122,8 @@ public class GlobalExceptionHandler {
 
 				.exception(ex.getClass().getSimpleName())
 
+				.cause(ex.getCause() != null ? ex.getCause().getClass().getSimpleName() : null)
+
 				.message(message)
 
 				.build();
