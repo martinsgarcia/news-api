@@ -1,4 +1,4 @@
-name: Java CI
+name: Java CI with Maven
 
 on:
   push:
@@ -7,33 +7,36 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up JDK 17
+    - name: Set up JDK
       uses: actions/setup-java@v2
       with:
         distribution: 'adopt'
         java-version: '17'
 
+    - name: Build with Maven
+      run: mvn clean install
+
+    - name: Install and configure CodeClimate test reporter
+      run: |
+        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        chmod +x ./cc-test-reporter
+        ./cc-test-reporter before-build
+
     - name: Run tests and generate coverage
       run: |
-        echo "Running Maven tests..."
+        echo "ls target..."
+        ls target
+        echo "target/site/jacoco/ ..."
+        ls target/site/jacoco
         mvn test
-        echo "Maven tests completed."
 
-        echo "Formatting JaCoCo coverage..."
-        ./cc-test-reporter format-coverage -t jacoco -o codeclimate.json -p target/site/jacoco/jacoco.xml
-        echo "JaCoCo coverage formatted."
-
-        echo "Files in the jacoco directory:"
-        ls -R target/site/jacoco/
-
-    - name: Upload coverage to Code Climate
-      run: ./cc-test-reporter upload-coverage
+    - name: Upload coverage to CodeClimate
+      run: ./cc-test-reporter format-coverage -t jacoco -o codeclimate.json -p target/site/jacoco/jacoco.xml && ./cc-test-reporter upload-coverage -i codeclimate.json
       env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE_REPORTER_ID }}
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
