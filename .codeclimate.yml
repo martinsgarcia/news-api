@@ -1,0 +1,9 @@
+version: '2'
+
+plugins:
+  java:
+    enabled: true
+  coverage:
+    enabled: true
+    input:
+      format: cobertura
