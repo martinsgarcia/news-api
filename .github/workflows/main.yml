@@ -38,11 +38,11 @@ jobs:
         echo "arquivos diretorio atual ..."
         ls
         echo "check jacoco files..."
-        ls target/site/jacoco
+        ls /home/runner/work/news-api/news-api/target/site/jacoco/
         echo "Ajustando permissões..."
         chmod -R 755 target/site/jacoco/
         echo "set jacoco source path ..."
-        JACOCO_SOURCE_PATH=news-api/src/main/java ./cc-test-reporter format-coverage ./news-api/target/site/jacoco/jacoco.xml -d -t jacoco
+        JACOCO_SOURCE_PATH=/home/runner/work/news-api/news-api/src/main/java ./cc-test-reporter format-coverage /home/runner/work/news-api/news-api/target/site/jacoco/jacoco.xml -d -t jacoco
         echo "upload report coverate ..."
         ./cc-test-reporter upload-coverage
       env:
