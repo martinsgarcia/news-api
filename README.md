@@ -1,5 +1,8 @@
 # News-API
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/583c765582c9f252aaf9/maintainability)](https://codeclimate.com/github/martinsgarcia/news-api/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/583c765582c9f252aaf9/test_coverage)](https://codeclimate.com/github/martinsgarcia/news-api/test_coverage)
+
 ## Overview
 
 This project is a Java application developed using Java 17, Spring Boot 3.2.1, Hibernate, and QueryDSL. It includes Swagger for API documentation, and JUnit for unit testing. The purpose of this README is to provide instructions and information for developers who are working on or reviewing the codebase.
@@ -71,6 +74,9 @@ Unit tests use JUnit. Run the tests with:
 ```bash
 mvn test
 ```
+
+## Code Climate
+Check the quality of this code by accessing the link: [https://codeclimate.com/github/martinsgarcia/news-api]
 
 ## License
 
