@@ -3,6 +3,8 @@ version: '2'
 plugins:
   java:
     enabled: true
+  sonar-java:
+    enabled: true    
   coverage:
     enabled: true
     input:
