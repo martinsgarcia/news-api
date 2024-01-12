@@ -1,10 +1,10 @@
 version: '2'
 
 plugins:
-  java:
-    enabled: true
   sonar-java:
-    enabled: true    
+    enabled: true
+    config:
+      sonar.java.source: "17"    
   coverage:
     enabled: true
     input:

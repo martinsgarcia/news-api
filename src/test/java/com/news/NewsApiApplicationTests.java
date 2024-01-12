@@ -12,7 +12,7 @@ class NewsApiApplicationTests {
 
 	@Test
 	void contextLoads() {
-		String[] args = {};
+		String[] args = { "--spring.profiles.active=junit" };
 		assertDoesNotThrow(() -> NewsApiApplication.main(args));
 	}
 
