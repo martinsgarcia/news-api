@@ -55,9 +55,6 @@ To run the application locally, use the following Maven command:
 mvn spring-boot:run
 ```
 
-The application will start, and you can access it at http://localhost:8080.
-
-
 ##  API Documentation
 
 Swagger has been integrated for API documentation. After starting the application, you can access the Swagger UI at [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).
