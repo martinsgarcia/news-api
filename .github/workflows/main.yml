@@ -32,18 +32,8 @@ jobs:
       run: mvn test
 
     - name: Upload coverage to CodeClimate
-      run: |
-        echo "caminho diretorio atual ..."
-        pwd
-        echo "arquivos diretorio atual ..."
-        ls
-        echo "check jacoco files..."
-        ls /home/runner/work/news-api/news-api/target/site/jacoco/
-        echo "Ajustando permissões..."
-        chmod -R 755 target/site/jacoco/
-        echo "set jacoco source path ..."
+      run: | 
         JACOCO_SOURCE_PATH=/home/runner/work/news-api/news-api/src/main/java ./cc-test-reporter format-coverage /home/runner/work/news-api/news-api/target/site/jacoco/jacoco.xml -d -t jacoco
-        echo "upload report coverate ..."
         ./cc-test-reporter upload-coverage
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
