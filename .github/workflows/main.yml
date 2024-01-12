@@ -41,13 +41,9 @@ jobs:
         ls target/site/jacoco
         echo "Ajustando permissões..."
         chmod -R 755 target/site/jacoco/
-        echo "diretorio news-api ..."
-        ls /news-api/
-        echo "upload files part1 ..."
-        ./cc-test-reporter format-coverage -t jacoco -o codeclimate.json -p ./news-api/target/site/jacoco/jacoco.xml
-        echo "ls pos upload part1 ..."
-        ls target/site/jacoco
-        echo "upload files part2 ..."
-        ./cc-test-reporter upload-coverage -i codeclimate.json
+        echo "set jacoco source path ..."
+        JACOCO_SOURCE_PATH=news-api/src/main/java ./cc-test-reporter format-coverage ./news-api/target/site/jacoco/jacoco.xml -d -t jacoco
+        echo "upload report coverate ..."
+        ./cc-test-reporter upload-coverage
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
