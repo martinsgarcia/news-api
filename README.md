@@ -26,7 +26,7 @@ Ensure you have the following tools installed:
 
 - Java 17
 - Maven
-- Your preferred IDE (e.g., IntelliJ, Eclipse)
+- Your preferred IDE (e.g., Eclipse, IntelliJ, Visual Studio Code)
 
 ## Setup
 
