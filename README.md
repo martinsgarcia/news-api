@@ -9,7 +9,6 @@ This project is a Java application developed using Java 17, Spring Boot 3.2.1, H
 
 **Note: This application is a proof of concept, and as such, the database is running in-memory using H2.**
 
-
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
