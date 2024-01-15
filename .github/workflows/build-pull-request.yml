@@ -19,11 +19,3 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean install
-
-  check-merge-ability:
-    runs-on: ubuntu-latest
-    needs: build
-    if: success()
-    steps:
-    - name: Prevent merge if build failed
-      run: echo "Build was successful. PR can be merged."
