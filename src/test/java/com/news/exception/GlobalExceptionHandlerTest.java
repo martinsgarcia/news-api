@@ -167,7 +167,7 @@ class GlobalExceptionHandlerTest {
 		assertNotNull(response);
 		assertEquals("http://example.com", response.getUrl());
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), response.getStatus());
-		assertEquals("ExceptionTeste2", response.getException());
+		assertEquals("ExceptionTeste3", response.getException());
 		assertEquals("Test Exception", response.getMessage());
 	}
 
