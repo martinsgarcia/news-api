@@ -29,3 +29,5 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean install
+    - name: Set check status
+      run: echo "::set-output name=STATUS_BUILD_JAVA_WITH_MAVEN::success"      
