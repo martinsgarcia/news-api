@@ -46,7 +46,6 @@ The project follows a standard Maven directory structure. Key directories includ
 - src/test: Unit and integration tests.
 - target: Compiled bytecode and build artifacts.
 
-
 ## Running the Application
 
 To run the application locally, use the following Maven command:
