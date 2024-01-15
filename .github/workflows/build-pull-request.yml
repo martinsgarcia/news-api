@@ -19,3 +19,18 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean install
+
+  check-merge-ability:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Check if build was successful
+      id: check-build
+      run: echo "::set-output name=build-successful::$(if [ -z "$GITHUB_REF" ]; then echo 'false'; else echo 'true'; fi)"
+    - name: Prevent merge if build failed
+      run: |
+        if [ "${{ steps.check-build.outputs.build-successful }}" == "false" ]; then
+          echo "Build failed. PR cannot be merged."
+          exit 1
+        fi
+
