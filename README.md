@@ -1,5 +1,6 @@
 # News-API
 
+[![Java Maven CI CodeClimate](https://github.com/martinsgarcia/news-api/actions/workflows/java-maven-ci-codeclimate.yml/badge.svg)](https://github.com/martinsgarcia/news-api/actions/workflows/java-maven-ci-codeclimate.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/583c765582c9f252aaf9/maintainability)](https://codeclimate.com/github/martinsgarcia/news-api/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/583c765582c9f252aaf9/test_coverage)](https://codeclimate.com/github/martinsgarcia/news-api/test_coverage)
 
